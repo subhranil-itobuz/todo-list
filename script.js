@@ -3,7 +3,7 @@ const todoAddBtn = document.getElementById('todoAddBtn');
 const resultSection = document.getElementById('resultSection')
 
 const todoList = [];
-let todoCardText = ''
+const completeTodo = [];
 
 todoInput.addEventListener('keypress', (e) => {
   if (e.key === "Enter") {
@@ -12,49 +12,67 @@ todoInput.addEventListener('keypress', (e) => {
   }
 })
 
-const createTodoCardHandler = () => {
-  const divElement = document.createElement("div");
-  divElement.setAttribute('class', 'result-card-style')
-  divElement.setAttribute('id', 'divCard')
-  const divCard = document.getElementById('divCard')
+const createTodoCardHandler = (todoArr) => {
+  resultSection.innerHTML = '';
+  todoArr.map((value, index) => {
+    const divElement = document.createElement("div");
+    const divContent = document.createElement("p");
+    const divButton = document.createElement('div');
+    const checkButtonElement = document.createElement("button");
+    const deleteButtonElement = document.createElement("button");
 
-  const divButton = document.createElement('div')
-  divButton.setAttribute('class', 'result-card-button')
 
-  const todoText = document.createTextNode(todoList[0])
+    divElement.setAttribute('class', 'result-card-style')
+    divElement.setAttribute('id', 'divCard')
+    const divCard = document.getElementById('divCard')
 
-  const checkButtonElement = document.createElement("button")
-  checkButtonElement.innerHTML = '&check;'
-  checkButtonElement.setAttribute('class', 'result-card-button-style')
-  checkButtonElement.setAttribute('id', 'checkBtn')
-  checkButtonElement.setAttribute('onClick', "checkHandler()")
+    divContent.textContent = value;
+    divContent.setAttribute('id', 'divText');
+    const divText = document.getElementById('divText');
 
-  const deleteButtonElement = document.createElement("button")
-  deleteButtonElement.innerHTML = '&#x2715;'
-  deleteButtonElement.setAttribute('class', 'result-card-button-style')
-  deleteButtonElement.setAttribute('id', 'deleteBtn')
-  deleteButtonElement.setAttribute('onClick', 'deleteHandler()')
+    if (completeTodo.includes(value))
+      divContent.setAttribute('class', 'complete-todo-content')
 
-  divElement.appendChild(todoText)
-  divButton.appendChild(checkButtonElement)
-  divButton.appendChild(deleteButtonElement)
-  divElement.appendChild(divButton)
-  resultSection.prepend(divElement)
+    divButton.setAttribute('class', 'result-card-button')
+
+    checkButtonElement.innerHTML = '&check;'
+    checkButtonElement.setAttribute('class', 'result-card-button-style')
+    checkButtonElement.setAttribute('id', 'checkBtn')
+    checkButtonElement.setAttribute('onClick', `checkHandler(${index})`)
+
+    deleteButtonElement.innerHTML = '&#x2715;'
+    deleteButtonElement.setAttribute('class', 'result-card-button-style')
+    deleteButtonElement.setAttribute('id', 'deleteBtn')
+    deleteButtonElement.setAttribute('onClick', `deleteHandler(${index})`)
+
+    divElement.appendChild(divContent)
+    divButton.appendChild(checkButtonElement)
+    divButton.appendChild(deleteButtonElement)
+    divElement.appendChild(divButton)
+    resultSection.append(divElement)
+  })
 }
 
 todoAddBtn.addEventListener('click', () => {
   const todo = todoInput.value;
   todoInput.value = '';
   todoList.unshift(todo)
-  createTodoCardHandler();
+  createTodoCardHandler(todoList);
   console.log(todoList)
 })
 
-function checkHandler() {
-  console.log("check")
+function checkHandler(index) {
+  console.log("check index", index)
+  if (completeTodo.includes(todoList[index]))
+    completeTodo.unshift(todoList[index])
+  else
+    completeTodo.splice(completeTodo.indexOf(todoList[index], 1))
+
+  divText[index].classList.toggle('complete-todo-content')
 }
 
-function deleteHandler() {
-  console.log('delete')
+function deleteHandler(index) {
+  console.log('delete index', index)
+  todoList.splice(index, 1);
+  createTodoCardHandler(todoList)
 }
-

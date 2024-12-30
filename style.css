@@ -35,3 +35,9 @@
 .result-card-button-style:nth-child(2):hover {
   background-color: rgb(218, 71, 71);
 }
+
+.complete-todo-content{
+  text-decoration: line-through;
+  color: gray;
+  font-weight: 100;
+}

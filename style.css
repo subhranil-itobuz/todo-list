@@ -1,3 +1,26 @@
+body {
+  max-height: 100vh ;
+}
+
+p {
+  margin: 0 !important;
+}
+
+.result-section {
+  max-height: 66vh;
+  overflow: scroll;
+  scrollbar-width:thin;
+}
+
+.header-input-todo {
+width: 215px;
+padding: 15px 10px 15px;
+
+@media (min-width:768px) {
+width: 350px;
+}
+}
+
 .result-card-style {
   background-color: rgb(231, 201, 201);
   font-size: larger;
@@ -14,6 +37,7 @@
 .result-card-button {
   display: flex;
   gap: 10px;
+  width: 20%;
 }
 
 
@@ -36,8 +60,14 @@
   background-color: rgb(218, 71, 71);
 }
 
-.complete-todo-content{
+.complete-todo-content {
   text-decoration: line-through;
   color: gray;
   font-weight: 100;
+}
+
+.div-text-content {
+  width:75%;
+  overflow-x: scroll;
+  scrollbar-width: none;
 }

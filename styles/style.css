@@ -3,7 +3,7 @@
   max-width: 1440px;
 }
 .body-container .header-input-todo {
-  width: 70vw;
+  width: 67vw;
   padding: 15px 10px 15px;
 }
 @media (min-width: 768px) {
@@ -11,10 +11,18 @@
     width: 536px;
   }
 }
+.body-container .header-input-btn {
+  width: 72px;
+}
 .body-container .result-section {
   max-height: 66vh;
   overflow: auto;
   scrollbar-width: thin;
+}
+@media (min-width: 1440px) {
+  .body-container .result-section {
+    max-height: 58vh;
+  }
 }
 .body-container .result-section .result-card-style {
   background-color: rgb(231, 201, 201);
@@ -38,7 +46,6 @@
   height: 30px;
   overflow-y: scroll;
   scrollbar-width: none;
-  display: flex;
 }
 .body-container .result-section .result-card-style .result-card-button {
   display: flex;
@@ -55,9 +62,12 @@
   font-weight: 500;
 }
 .body-container .result-section .result-card-style .result-card-button-style:nth-child(1):hover {
-  background-color: rgb(55, 179, 55);
+  background-color: rgb(177, 182, 227);
 }
 .body-container .result-section .result-card-style .result-card-button-style:nth-child(2):hover {
+  background-color: rgb(55, 179, 55);
+}
+.body-container .result-section .result-card-style .result-card-button-style:nth-child(3):hover {
   background-color: rgb(218, 71, 71);
 }
 @media (min-width: 768px) {

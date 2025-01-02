@@ -1,0 +1,73 @@
+.body-container {
+  max-height: 98vh;
+  max-width: 1440px;
+}
+.body-container .header-input-todo {
+  width: 70vw;
+  padding: 15px 10px 15px;
+}
+@media (min-width: 768px) {
+  .body-container .header-input-todo {
+    width: 536px;
+  }
+}
+.body-container .result-section {
+  max-height: 66vh;
+  overflow: auto;
+  scrollbar-width: thin;
+}
+.body-container .result-section .result-card-style {
+  background-color: rgb(231, 201, 201);
+  width: 95vw;
+  font-size: larger;
+  font-weight: bold;
+  padding: 20px;
+  margin: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  border-radius: 10px;
+}
+@media (min-width: 768px) {
+  .body-container .result-section .result-card-style {
+    width: 728px;
+  }
+}
+.body-container .result-section .result-card-style .div-text-content {
+  height: 30px;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  display: flex;
+}
+.body-container .result-section .result-card-style .result-card-button {
+  display: flex;
+  gap: 10px;
+}
+.body-container .result-section .result-card-style .result-card-button-style {
+  border: none;
+  padding: 5px 10px;
+  border-radius: 10px;
+  font-size: 20px;
+}
+.body-container .result-section .result-card-style .result-card-button-style:hover {
+  cursor: pointer;
+  font-weight: 500;
+}
+.body-container .result-section .result-card-style .result-card-button-style:nth-child(1):hover {
+  background-color: rgb(55, 179, 55);
+}
+.body-container .result-section .result-card-style .result-card-button-style:nth-child(2):hover {
+  background-color: rgb(218, 71, 71);
+}
+@media (min-width: 768px) {
+  .body-container .result-section .result-card-style .result-card-button-style {
+    padding: 10px 20px;
+    font-size: 24px;
+  }
+}
+.body-container .result-section .complete-todo-content {
+  text-decoration: line-through;
+  color: gray;
+  font-weight: 100;
+}/*# sourceMappingURL=style.css.map */

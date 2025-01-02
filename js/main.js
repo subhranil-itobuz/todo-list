@@ -6,19 +6,8 @@ const activeBtn = document.getElementById('activeBtn')
 const completeBtn = document.getElementById('completeBtn')
 const clearBtn = document.getElementById('clearBtn')
 
-const localList = localStorage.getItem('todoList')
-console.log(JSON.parse(localList))
-
-const todoList = JSON.parse(localList) || [];
+const todoList = JSON.parse(localStorage.getItem('todoList')) || [];
 let currentBtnCheck = '';
-
-//Enter to submit
-todoInput.addEventListener('keypress', (e) => {
-  if (e.key === "Enter") {
-    e.preventDefault();
-    todoAddBtn.click();
-  }
-})
 
 //function to create todo card
 function createTodoCardHandler(title, check, index) {
@@ -31,8 +20,7 @@ function createTodoCardHandler(title, check, index) {
   divElement.setAttribute('class', 'result-card-style')
 
   divContent.textContent = title;
-  divContent.setAttribute('class', 'm-0 div-text-content');
-  divContent.setAttribute('class', `${check ? 'complete-todo-content' : ''}`)
+  divContent.setAttribute('class', `${check ? 'complete-todo-content div-text-content my-auto' : 'div-text-content my-auto'}`)
 
   divButton.setAttribute('class', 'result-card-button')
 
@@ -58,30 +46,23 @@ function showTodoList() {
   resultSection.innerHTML = '';
 
   if (currentBtnCheck === '' || currentBtnCheck === 'all' || currentBtnCheck === 'clear') {
-    todoList.forEach(({ title, check }, index) => {
-      createTodoCardHandler(title, check, index)
-    })
+    todoList.forEach(({ title, check }, index) => createTodoCardHandler(title, check, index))
     localStorage.setItem('todoList', JSON.stringify(todoList))
   }
 
   else if (currentBtnCheck === 'active') {
     todoList.map(({ title, check }, index) => {
-      if (!check)
-        createTodoCardHandler(title, check, index)
+      if (!check) createTodoCardHandler(title, check, index)
     })
-    console.log('active todos --> ', todoList);
     localStorage.setItem('todoList', JSON.stringify(todoList))
   }
 
   else if (currentBtnCheck === 'complete') {
-    let checkCount = 0
     todoList.filter(({ title, check }, index) => {
       if (check) {
         createTodoCardHandler(title, check, index)
-        checkCount++;
       }
     })
-    console.log('completed todos --> ', todoList);
     localStorage.setItem('todoList', JSON.stringify(todoList))
   }
 }
@@ -92,22 +73,20 @@ todoAddBtn.addEventListener('click', () => {
   todoInput.value = '';
 
   if (todo !== '' && (todoList.findIndex(({ title }) => title === todo) === -1)) {
-    todoList.unshift({ title: todo, check: false});
+    todoList.unshift({ title: todo, check: false });
     localStorage.setItem('todoList', JSON.stringify(todoList))
-    console.log(todoList);
+    currentBtnCheck = ''
+    showTodoList()
   }
 
-  else
-    alert('Todo is Already Exists.')
+  else if (todo === '') alert('Todo Required')
 
-  showTodoList();
+  else alert('Todo is Already Exists.')
 })
 
 //delete todo card function
 function deleteHandler(index) {
-  let confirmDel = confirm('Are you sure you want to delete?')
-
-  if (confirmDel) {
+  if (confirm('Are you sure you want to delete?')) {
     todoList.splice(index, 1);
     localStorage.setItem('todoList', JSON.stringify(todoList))
     showTodoList();
@@ -121,11 +100,15 @@ function checkHandler(index) {
   showTodoList()
 }
 
+//Enter to submit
+todoInput.addEventListener('keypress', (e) => { 
+  if (e.key === "Enter") todoAddBtn.click(); 
+})
+
 //view all todo event listener
 allBtn.addEventListener('click', () => {
   currentBtnCheck = 'all'
   showTodoList()
-  console.log('all todos --> ', todoList);
 })
 
 //view only active todos event listeners
@@ -148,7 +131,7 @@ clearBtn.addEventListener('click', () => {
     if (todoList[index].check === true) todoList.splice(index, 1);
     else index++;
   }
-  console.log(todoList);
+  // console.log(todoList);
   localStorage.setItem('todoList', JSON.stringify(todoList))
   showTodoList()
 })

@@ -6,7 +6,10 @@ const activeBtn = document.getElementById('activeBtn')
 const completeBtn = document.getElementById('completeBtn')
 const clearBtn = document.getElementById('clearBtn')
 
-const todoList = [];
+const localList = localStorage.getItem('todoList')
+console.log(JSON.parse(localList))
+
+const todoList = JSON.parse(localList) || [];
 let currentBtnCheck = '';
 
 //Enter to submit
@@ -17,6 +20,7 @@ todoInput.addEventListener('keypress', (e) => {
   }
 })
 
+//function to create todo card
 function createTodoCardHandler(title, check, index) {
   const divElement = document.createElement("div");
   const divContent = document.createElement("p");
@@ -42,8 +46,6 @@ function createTodoCardHandler(title, check, index) {
   deleteButtonElement.setAttribute('id', 'deleteBtn')
   deleteButtonElement.setAttribute('onClick', `deleteHandler(${index})`)
 
-
-
   divElement.appendChild(divContent)
   divButton.appendChild(checkButtonElement)
   divButton.appendChild(deleteButtonElement)
@@ -51,13 +53,15 @@ function createTodoCardHandler(title, check, index) {
   resultSection.append(divElement)
 }
 
+//function to show todo cards
 function showTodoList() {
   resultSection.innerHTML = '';
 
-  if (currentBtnCheck === 'all' || currentBtnCheck === '' || currentBtnCheck === 'clear') {
-    todoList?.forEach(({ title, check }, index) => {
+  if (currentBtnCheck === '' || currentBtnCheck === 'all' || currentBtnCheck === 'clear') {
+    todoList.forEach(({ title, check }, index) => {
       createTodoCardHandler(title, check, index)
     })
+    localStorage.setItem('todoList', JSON.stringify(todoList))
   }
 
   else if (currentBtnCheck === 'active') {
@@ -66,6 +70,7 @@ function showTodoList() {
         createTodoCardHandler(title, check, index)
     })
     console.log('active todos --> ', todoList);
+    localStorage.setItem('todoList', JSON.stringify(todoList))
   }
 
   else if (currentBtnCheck === 'complete') {
@@ -77,6 +82,7 @@ function showTodoList() {
       }
     })
     console.log('completed todos --> ', todoList);
+    localStorage.setItem('todoList', JSON.stringify(todoList))
   }
 }
 
@@ -86,10 +92,8 @@ todoAddBtn.addEventListener('click', () => {
   todoInput.value = '';
 
   if (todo !== '' && (todoList.findIndex(({ title }) => title === todo) === -1)) {
-    todoList.unshift({
-      title: todo,
-      check: false
-    });
+    todoList.unshift({ title: todo, check: false});
+    localStorage.setItem('todoList', JSON.stringify(todoList))
     console.log(todoList);
   }
 
@@ -105,7 +109,7 @@ function deleteHandler(index) {
 
   if (confirmDel) {
     todoList.splice(index, 1);
-    // console.log(index ,'deleted', todoList);
+    localStorage.setItem('todoList', JSON.stringify(todoList))
     showTodoList();
   }
 }
@@ -113,6 +117,7 @@ function deleteHandler(index) {
 //completed line through checking
 function checkHandler(index) {
   todoList[index].check = !todoList[index].check
+  localStorage.setItem('todoList', JSON.stringify(todoList))
   showTodoList()
 }
 
@@ -144,6 +149,8 @@ clearBtn.addEventListener('click', () => {
     else index++;
   }
   console.log(todoList);
-
+  localStorage.setItem('todoList', JSON.stringify(todoList))
   showTodoList()
 })
+
+showTodoList()

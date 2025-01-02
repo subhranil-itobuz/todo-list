@@ -1,3 +1,4 @@
+//this file is for array of elements.
 const todoInput = document.getElementById('todoInput');
 const todoAddBtn = document.getElementById('todoAddBtn');
 const resultSection = document.getElementById('resultSection')
